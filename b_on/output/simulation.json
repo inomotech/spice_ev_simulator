@@ -1,0 +1,103 @@
+{
+  "temporal_parameters": {
+    "interval": 15.0,
+    "unit": "minutes",
+    "info": "simulation interval"
+  },
+  "grid_connector": {
+    "gcID": "GC1",
+    "grid operator": "default_grid_operator",
+    "voltage level": "MV"
+  },
+  "photovoltaics": {
+    "nominal power": 10.0,
+    "unit": "kWp",
+    "info": "Nominal power of PV power plants"
+  },
+  "charging_strategy": {
+    "strategy": "balanced",
+    "info": "charging strategy for electric vehicles"
+  },
+  "avg flex per window": {
+    "04-10": 125.20833333333333,
+    "10-16": 105.95833333333331,
+    "16-22": 126.88888888888889,
+    "22-04": 132.30555555555554,
+    "unit": "kW",
+    "info": "Average flexible power range per time window"
+  },
+  "sum of energy": {
+    "value": 38.0664161695539,
+    "unit": "kWh",
+    "info": "Total drawn energy from grid connection point during simulation"
+  },
+  "sum of energy per window": {
+    "04-10": 9.70763151544352,
+    "10-16": 2.551160243090333,
+    "16-22": 11.688591392070993,
+    "22-04": 14.11903301894905,
+    "unit": "kWh",
+    "info": "Total drawn energy per time window"
+  },
+  "avg standing time": {
+    "single": 14.928571428571429,
+    "total": {
+      "GC1": 52.25
+    },
+    "unit": "h",
+    "info": "Average duration of a single standing event and average total time standing time of all vehicles"
+  },
+  "standing per window": {
+    "04-10": 27.751196172248804,
+    "10-16": 8.373205741626794,
+    "16-22": 29.425837320574164,
+    "22-04": 34.44976076555024,
+    "unit": "%",
+    "info": "Share of standing time per time window"
+  },
+  "avg needed energy": {
+    "value": 11.562533473021299,
+    "unit": "kWh",
+    "info": "Average amount of energy needed to reach the desired SoC (averaged over all vehicles and charge events)"
+  },
+  "power peaks": {
+    "fixed": 0,
+    "variable": 1.6547687481384106,
+    "total": 1.6547687481384106,
+    "unit": "kW",
+    "info": "Maximum drawn power, by fixed loads (building), variable loads (charging stations, stationary batteries) and all loads"
+  },
+  "avg drawn power": {
+    "value": 0.5287002245771375,
+    "unit": "kW",
+    "info": "Drawn power, averaged over all time steps"
+  },
+  "local energy generation": {
+    "value": 0.0,
+    "unit": "kWh",
+    "info": "Total energy from renewable energy sources"
+  },
+  "feed-in energy": {
+    "generation": 0.0,
+    "v2g": 0.0,
+    "battery": 0.0,
+    "unit": "kWh",
+    "info": "Total energy fed into grid per component type"
+  },
+  "stationary battery cycles": {
+    "value": 0.0,
+    "unit": null,
+    "info": "Number of load cycles of stationary batteries (averaged)"
+  },
+  "all vehicle battery cycles": {
+    "value": 1.208457656176314,
+    "unit": null,
+    "info": "Number of load cycles per vehicle (averaged)"
+  },
+  "times below desired soc": {
+    "without margin": 0,
+    "with margin": 0,
+    "margin": 0.2,
+    "info": "Number of times vehicle SoC was below desired SoC on departure (with and without margin of 20.0%)"
+  }
+}
