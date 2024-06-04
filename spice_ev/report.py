@@ -765,7 +765,9 @@ def plot(scenario):
         plt.setp(ax.get_xticklabels(), rotation=30, ha='right')
 
     plt.subplots_adjust(hspace=0.5)
-    plt.show()
+    # plt.show()
+    import streamlit as st
+    st.pyplot(plt)
 
 
 def generate_reports(scenario, options):
