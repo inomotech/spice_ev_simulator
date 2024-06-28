@@ -19,56 +19,56 @@
     "info": "charging strategy for electric vehicles"
   },
   "avg flex per window": {
-    "04-10": 126.125,
-    "10-16": 110.08333333333331,
-    "16-22": 127.80555555555556,
-    "22-04": 132.30555555555554,
+    "04-10": 99.99999999999997,
+    "10-16": 99.99999999999997,
+    "16-22": 99.99999999999997,
+    "22-04": 99.70238095238093,
     "unit": "kW",
     "info": "Average flexible power range per time window"
   },
   "sum of energy": {
-    "value": 177.12090521758728,
+    "value": 2618.421052631579,
     "unit": "kWh",
     "info": "Total drawn energy from grid connection point during simulation"
   },
   "sum of energy per window": {
-    "04-10": 20.947260041831317,
-    "10-16": 117.39483203574936,
-    "16-22": 38.77881314000661,
-    "22-04": 0.0,
+    "04-10": 236.52631578947384,
+    "10-16": 0.0,
+    "16-22": 1050.0,
+    "22-04": 1331.8947368421052,
     "unit": "kWh",
     "info": "Total drawn energy per time window"
   },
   "avg standing time": {
-    "single": 14.928571428571429,
+    "single": 11.59375,
     "total": {
-      "GC1": 52.25
+      "GC1": 92.75
     },
     "unit": "h",
     "info": "Average duration of a single standing event and average total time standing time of all vehicles"
   },
   "standing per window": {
-    "04-10": 27.751196172248804,
-    "10-16": 8.373205741626794,
-    "16-22": 29.425837320574164,
-    "22-04": 34.44976076555024,
+    "04-10": 32.075471698113205,
+    "10-16": 0.0,
+    "16-22": 22.641509433962263,
+    "22-04": 45.283018867924525,
     "unit": "%",
     "info": "Share of standing time per time window"
   },
   "avg needed energy": {
-    "value": 12.348468937365253,
+    "value": 30.009706643658326,
     "unit": "kWh",
     "info": "Average amount of energy needed to reach the desired SoC (averaged over all vehicles and charge events)"
   },
   "power peaks": {
     "fixed": 0,
-    "variable": 72.0,
-    "total": 72.0,
+    "variable": 50.0,
+    "total": 50.0,
     "unit": "kW",
     "info": "Maximum drawn power, by fixed loads (building), variable loads (charging stations, stationary batteries) and all loads"
   },
   "avg drawn power": {
-    "value": 2.46001257246649,
+    "value": 15.585839598997495,
     "unit": "kW",
     "info": "Drawn power, averaged over all time steps"
   },
@@ -84,18 +84,13 @@
     "unit": "kWh",
     "info": "Total energy fed into grid per component type"
   },
-  "max. stored energy in batteries": {
-    "BAT1": 100.0,
-    "unit": "kWh",
-    "info": "Maximum stored energy in each battery by name"
-  },
   "stationary battery cycles": {
-    "value": 1.3048923107657475,
+    "value": 0.0,
     "unit": null,
     "info": "Number of load cycles of stationary batteries (averaged)"
   },
   "all vehicle battery cycles": {
-    "value": 2.2556638964037434,
+    "value": 13.964912280701755,
     "unit": null,
     "info": "Number of load cycles per vehicle (averaged)"
   },
@@ -108,33 +103,33 @@
   "costs": {
     "electricity costs": {
       "per year": {
-        "total (gross)": 5152.4,
+        "total (gross)": 27938.25,
         "grid_fee": {
-          "total grid fee": 1677.62,
+          "total grid fee": 6674.54,
           "commodity costs": {
-            "total costs": 1611.92,
+            "total costs": 3167.54,
             "costs for fixed load": "no differentiation between fixed and flexible load",
             "costs for flexible load": "no differentiation between fixed and flexible load"
           },
           "capacity_or_basic_costs": {
-            "total costs": 65.7,
+            "total costs": 3507.0,
             "costs for fixed load": "no differentiation between fixed and flexible load",
             "costs for flexible load": "no differentiation between fixed and flexible load"
           },
           "additional costs": 0
         },
-        "power procurement": 1659.33,
+        "power procurement": 10512.96,
         "levies": {
           "EEG levy": 0.0,
-          "chp levy": 81.46,
-          "individual charge levy": 94.17,
-          "Offshore levy": 90.29,
-          "interruptible loads levy": 0.65
+          "chp levy": 516.09,
+          "individual charge levy": 596.64,
+          "Offshore levy": 572.07,
+          "interruptible loads levy": 4.1
         },
-        "concession fee": 284.46,
+        "concession fee": 1802.22,
         "taxes": {
-          "value added tax": 822.65,
-          "tax on electricity": 441.77
+          "value added tax": 4460.73,
+          "tax on electricity": 2798.9
         },
         "feed-in remuneration": {
           "PV": 0.0,
@@ -145,33 +140,33 @@
         "info": "energy costs for one year"
       },
       "for simulation period": {
-        "total (gross)": 119.89,
+        "total (gross)": 4629.1,
         "grid fee": {
-          "total grid fee": 78.95,
+          "total grid fee": 3567.75,
           "commodity costs": {
-            "total costs": 13.25,
+            "total costs": 60.75,
             "costs for fixed load": "no differentiation between fixed and flexible load",
             "costs for flexible load": "no differentiation between fixed and flexible load"
           },
-          "basic costs": {
-            "total costs": 65.7,
+          "capacity costs": {
+            "total costs": 3507.0,
             "costs for fixed load": "no differentiation between fixed and flexible load",
             "costs for flexible load": "no differentiation between fixed and flexible load"
           },
-          "additional costs": 0
+          "additional costs": 0.0
         },
-        "power procurement": 13.64,
+        "power procurement": 201.62,
         "levies": {
           "EEG levy": 0.0,
-          "chp levy": 0.67,
-          "individual charge levy": 0.77,
-          "Offshore levy": 0.74,
-          "interruptible loads levy": 0.01
+          "chp levy": 9.9,
+          "individual charge levy": 11.44,
+          "Offshore levy": 10.97,
+          "interruptible loads levy": 0.08
         },
-        "concession fee": 2.34,
+        "concession fee": 34.56,
         "taxes": {
-          "value added tax": 19.14,
-          "tax on electricity": 3.63
+          "value added tax": 739.1,
+          "tax on electricity": 53.68
         },
         "feed-in remuneration": {
           "PV": 0.0,

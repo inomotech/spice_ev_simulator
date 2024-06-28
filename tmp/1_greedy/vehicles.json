@@ -1,0 +1,46 @@
+{
+    "Tesla Model 3": {
+        "name": "Tesla Model 3",
+        "capacity": 75,
+        "mileage": 75.0,
+        "charging_curve": [
+            [
+                0,
+                7
+            ],
+            [
+                0.8,
+                7
+            ],
+            [
+                1,
+                7
+            ]
+        ],
+        "min_charging_power": 0.2,
+        "v2g": false,
+        "v2g_power_factor": 0.5,
+        "discharge_limit": 0.5,
+        "statistical_values": {
+            "distance_in_km": {
+                "avg_distance": 50,
+                "std_distance": 0,
+                "min_distance": 0,
+                "max_distance": 1000
+            },
+            "departure": {
+                "avg_start": "08:00",
+                "std_start_in_hours": 0,
+                "min_start": "06:00",
+                "max_start": "10:00"
+            },
+            "duration_in_hours": {
+                "avg_driving": 11.0,
+                "std_driving": 0,
+                "min_driving": 0,
+                "max_driving": 20
+            }
+        },
+        "no_drive_days": []
+    }
+}

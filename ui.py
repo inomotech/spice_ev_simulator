@@ -5,6 +5,7 @@ import pandas as pd
 from simulate import simulate
 from spice_ev.util import set_options_from_config
 from generate import generate
+from vehicles import Vehicle, convert_to_vehicle_objects
 import argparse
 import os
 import json
@@ -12,45 +13,12 @@ import json
 # stramplit wide
 st.set_page_config(layout="wide")
 
-c = st.columns(5)
-with c[0]:
-    strategies_list: list[str] = [
-        "greedy", 
-        "balanced", 
-        "balanced_market", 
-        # "peak_shaving", 
-        # "peak_load_window", 
-        # "flex_window", 
-        # "schedule"
-        ]
-
-    strategy: str = st.selectbox("Select a strategy", strategies_list)
-
-with c[1]:
-    battery_capacity = st.number_input("Battery Capacity (kWh)", value=100)
-
-with c[2]:
-    show_visual = st.checkbox("Show SimVisual", value=False)
-
-with c[3]:
-    num_vehicles = st.number_input("Number of Vehicles", value=1)
-
-with c[4]:
-    num_days = st.number_input("Number of Days", value=1)
-
-prices_file = './b_on/input/energy-charts_Electricity_production_and_spot_prices_in_Germany_in_week_20_2024 (1).csv'
-prices_data = pd.read_csv(prices_file, parse_dates=True)
-columns = prices_data.columns
-time_col_name = columns[0]
-price_col_name = columns[1]
-prices_data[price_col_name] = prices_data[price_col_name].apply(lambda x: x/1000) # convert from EUR/MWh to EUR/kWh
-
-def create_price_chart(prices_data: pd.DataFrame, time_col_name: str, price_col_name: str):
+def create_price_chart(prices_data: pd.DataFrame, time_col_name: str = "time", price_col_name: str = "price"):
     """
     Create an Altair chart with tooltips for Price (EUR/MWh)
     """
     brush = alt.selection_interval(bind='scales', encodings=['x'])
-
+    
     price_chart = alt.Chart(prices_data).mark_line(color='red').encode(
         x=alt.X('{}:T'.format(time_col_name), title='Time'),
         y=alt.Y('{}:Q'.format(price_col_name), title=price_col_name),
@@ -63,36 +31,51 @@ def create_price_chart(prices_data: pd.DataFrame, time_col_name: str, price_col_
     )
     return price_chart
 
-price_chart = create_price_chart(prices_data, time_col_name, price_col_name)
-# st.altair_chart(price_chart)
+def generate_vehicle_types_file(path: str, vehicles_df: pd.DataFrame) -> str:
+    vehicles_file_path = os.path.join(os.path.dirname(path), "vehicles.json")
+    vehicles = convert_to_vehicle_objects(vehicles_df)
+    output = {}
+    for i, v in enumerate(vehicles):
+        output[v.name] = v.__dict__
 
-def generate_config(run_id: str, scenario_id: str, prices_data: pd.DataFrame | None) -> str:
+    with open(vehicles_file_path, 'w') as f:
+        json.dump(output, f, indent=4)
+
+    return vehicles_file_path
+
+def generate_config(run_id: str, scenario_id: str, vehicles_df: pd.DataFrame, prices_data: pd.DataFrame | None, grid_power_kW: int) -> str:
     """
     Generate a configuration file for a scenario
     Returns the path to the scenarion.json
 
     @param prices_data: a daaframe with two columns: time and price
     """
+    # load defaults from file
     config_file = "./b_on/generate.cfg"
     parser = argparse.ArgumentParser(description='Application description.')
     parser.add_argument('--config', type=str, help='Path to the configuration file', default=config_file)
     args = parser.parse_args()
-    
-    # it just updates the args
     set_options_from_config(args, verbose=True)
     
-    output_json_path = "./tmp/{}/{}/scenario.json".format(run_id, scenario_id)
+    # base path for all tmp files for this run
+    output_json_path = "./tmp/{}_{}/scenario.json".format(run_id, scenario_id)
     os.makedirs(os.path.dirname(output_json_path), exist_ok=True)
     args.output = output_json_path
 
+    # write vehicles to file which is then passed to the config
+    vehicles_file_path = generate_vehicle_types_file(output_json_path, vehicles_df)
+    args.vehicle_types = vehicles_file_path
+    args.vehicles = [[v["count"], v["name"]] for _, v in vehicles_df.iterrows()]
 
+    # set the battery capacity
     args.battery = [[battery_capacity, 0.5]] if battery_capacity > 0 else []
-    
-    args.num_days = num_days
-    for v in args.vehicles:
-        v[0] = num_vehicles
+    args.buffer = 0.1
 
-    st.write(args)
+    args.gc_power = grid_power_kW
+    
+    args.days = num_days
+
+    # st.write(args)
 
     if prices_data is not None:        
         args.start_time = prices_data["time"].iloc[0]
@@ -100,12 +83,13 @@ def generate_config(run_id: str, scenario_id: str, prices_data: pd.DataFrame | N
         prices_data = prices_data.to_csv(path_or_buf=prices_csv_path, index=False)
         
         args.include_price_csv = "prices.csv" # it will be relative to scenario.json
-        args.include_price_csv_option=[['column', "price"], ['step_duration_s', 900]]
+        args.include_price_csv_option=[['column', "price"], ['step_duration_s', 3600]]
     else:
         st.warning("Prices data is None")
         
     with st.expander("Generating scenario {}".format(scenario_id), expanded=False):
         st.write(args)
+
     
     generate(args)
 
@@ -134,7 +118,7 @@ class ScenarioResult:
         self.timeseries["total_cost"] = self.timeseries["cost"].cumsum()
 
     def get_metrics(self):
-        st.write(self.timeseries)
+        # st.write(self.timeseries)
         metrics = []
         data = self.raw_results
 
@@ -197,8 +181,8 @@ def simulate_scenario(scenario_file, strategy, show_visual) -> ScenarioResult:
     soc = pd.read_csv(params.save_soc)
     return ScenarioResult(results=results, timeseries=timeseries, soc=soc)
 
-def run_scenario(prices_data: pd.DataFrame, run_id: int, strategy: str, show_visual: bool = False):
-    scenario_path = generate_config(run_id=run_id, scenario_id=strategy, prices_data=prices_data)
+def run_scenario(run_id: int, strategy: str, grid_power_kW: int, vehicles_df: pd.DataFrame, prices_data: pd.DataFrame, show_visual: bool = False):
+    scenario_path = generate_config(run_id=run_id, scenario_id=strategy, vehicles_df=vehicles_df, prices_data=prices_data, grid_power_kW=grid_power_kW)
     res = simulate_scenario(scenario_file=scenario_path, strategy=strategy, show_visual=show_visual)
     return res
 
@@ -219,15 +203,69 @@ def consolidate_results(results: dict[str, ScenarioResult]):
     df["detail"] = df.pop("detail")
     return df
 
+def load_prices_data(prices_file: str, transport_cost: float) -> pd.DataFrame:
+    """
+    Load prices data from a CSV file and preprocess it
+    Returns the (dataframe, name of time column, name of price column)
+    """
+    prices_data = pd.read_csv(prices_file, parse_dates=True)
+    columns = prices_data.columns
+    time_col_name = columns[0]
+    price_col_name = columns[1]
+    prices_data[price_col_name] = prices_data[price_col_name].apply(lambda x: x/1000) # convert from EUR/MWh to EUR/kWh
+    prices_data = prices_data.rename(columns={time_col_name: "time", price_col_name: "price"})
+    prices_data["price"] = prices_data["price"] + transport_cost
+    return prices_data
 
-prices_data = prices_data.rename(columns={time_col_name: "time", price_col_name: "price"})
+c = st.columns(5)
+with c[0]:
+    strategies_list: list[str] = [
+        "greedy", 
+        "balanced", 
+        "balanced_market", 
+        "peak_shaving", 
+        # "peak_load_window", 
+        # "flex_window", 
+        # "schedule"
+        ]
+
+    strategies_selected: list[str] = st.multiselect("Select a strategy", strategies_list, ["greedy", "balanced"])
+
+with c[1]:
+    battery_capacity = st.number_input("Battery Capacity (kWh)", value=100)
+
+with c[2]:
+    grid_power_kW = st.number_input("Grid Power (kW)", value=50)
+    show_visual = False #st.checkbox("Show SimVisual", value=False)
+
+with c[3]:
+    num_days = st.number_input("Number of Days", value=7)
+
+# vehicles
+vehicles_df = pd.read_csv("./input/vehicles.csv")
+vehicles_df = vehicles_df.head(1)
+vehicles_df.no_drive_days = vehicles_df.no_drive_days.apply(lambda x: json.loads(x) if not pd.isna(x) else [])
+st.write(vehicles_df)
+
+# prices
+prices_file = './b_on/input/june_2024_prices.csv'
+prices_data = load_prices_data(prices_file, transport_cost=0.1)
+# st.write(prices_data)
+price_chart = create_price_chart(prices_data)
+# st.altair_chart(price_chart)
+
+if len(strategies_selected) == 0:
+    st.info("Please select at least one strategy")
+    st.stop()
 
 results = {}
-for s in strategies_list:
-    results[s] = run_scenario(prices_data=prices_data, run_id=1, strategy=s, show_visual=show_visual)
+for s in strategies_selected:
+    results[s] = run_scenario(grid_power_kW=grid_power_kW, prices_data=prices_data, vehicles_df=vehicles_df, run_id=1, strategy=s, show_visual=show_visual)
 
 consolidated_res = consolidate_results(results)
 st.write(consolidated_res)
+
+strategy = st.selectbox("Select a strategy to display", strategies_selected)
 
 # Metrics to plot
 metrics = ['grid supply [kW]', '# CS in use [-]', 'battery power [kW]', 'bat. stored energy [kWh]', 'sum CS power [kW]', 'cost', 'total_cost', 'price [EUR/kWh]']

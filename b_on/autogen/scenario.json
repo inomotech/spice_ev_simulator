@@ -99,22 +99,7 @@
         "parent": "GC1"
       }
     },
-    "batteries": {
-      "BAT1": {
-        "parent": "GC1",
-        "capacity": 50,
-        "charging_curve": [
-          [
-            0,
-            50
-          ],
-          [
-            1,
-            50
-          ]
-        ]
-      }
-    },
+    "batteries": {},
     "photovoltaics": {
       "PV1": {
         "parent": "GC1",
