@@ -101,7 +101,10 @@ def calculate_commodity_costs(price_list, power_supply_list, interval, fraction_
     # create lists with energy supply per timestep and calculate costs:
     # factor 3600: kilo Joule --> kWh
     # factor 100: ct --> €
+    print("fraction_year", fraction_year)
     for i in range(len(power_supply_list)):
+        # if power_supply_list[i] != 0:
+        #     print(i, price_list[i], power_supply_list[i], interval.total_seconds() / 3600)
         energy_supply_per_timestep = \
             power_supply_list[i] * interval.total_seconds() / 3600  # [kWh]
         commodity_costs_eur_sim = commodity_costs_eur_sim + \
@@ -200,7 +203,7 @@ def calculate_costs(strategy, voltage_level, interval,
     :return: total costs per year and simulation period (fees and taxes included)
     :rtype: dict
     """
-
+    print("calculate_costs", strategy, voltage_level, interval, price_list, power_fix_load_list, power_generation_feed_in_list, power_v2g_feed_in_list, power_battery_feed_in_list, charging_signal_list, price_sheet_path, grid_operator, results_json, power_pv_nominal, power_schedule_list)
     # sanity checks
     assert voltage_level is not None, "Voltage level must be set for cost calculation"
     assert price_sheet_path is not None, "Price sheet must be given"
@@ -248,6 +251,8 @@ def calculate_costs(strategy, voltage_level, interval,
             UTILIZATION_TIME_PER_YEAR_EC
         )
 
+        print("commodity_charge, capacity_charge, fee_type", commodity_charge, capacity_charge, fee_type)
+
         if strategy == "peak_load_window":
             # get peak power inside time windows
             if charging_signal_list is None:
@@ -281,9 +286,10 @@ def calculate_costs(strategy, voltage_level, interval,
         else:  # RLM
             capacity_costs_eur = calculate_capacity_costs_rlm(
                 capacity_charge, max_power_grid_supply)
-
+        
         # COMMODITY COSTS:
         price_list = [commodity_charge] * len(power_grid_supply_list)
+        print("price_list", price_list)
         commodity_costs_eur_per_year, commodity_costs_eur_sim = calculate_commodity_costs(
             price_list, power_grid_supply_list, interval, fraction_year)
 

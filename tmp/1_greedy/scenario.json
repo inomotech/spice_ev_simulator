@@ -28,7 +28,9 @@
         "v2g": false,
         "v2g_power_factor": 0.5,
         "discharge_limit": 0.5,
-        "no_drive_days": []
+        "no_drive_days": [
+          6
+        ]
       }
     },
     "vehicles": {
@@ -173,11 +175,11 @@
         "charging_curve": [
           [
             0,
-            50.0
+            100
           ],
           [
             1,
-            50.0
+            100
           ]
         ]
       }
@@ -1260,7 +1262,7 @@
         "event_type": "arrival",
         "update": {
           "connected_charging_station": "CS_Tesla Model 3_0",
-          "estimated_time_of_departure": "2024-06-23T08:00:00+02:00",
+          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
           "desired_soc": 0.8,
           "soc_delta": -0.5
         }
@@ -1281,7 +1283,7 @@
         "event_type": "arrival",
         "update": {
           "connected_charging_station": "CS_Tesla Model 3_1",
-          "estimated_time_of_departure": "2024-06-23T08:00:00+02:00",
+          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
           "desired_soc": 0.8,
           "soc_delta": -0.5
         }
@@ -1302,7 +1304,7 @@
         "event_type": "arrival",
         "update": {
           "connected_charging_station": "CS_Tesla Model 3_2",
-          "estimated_time_of_departure": "2024-06-23T08:00:00+02:00",
+          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
           "desired_soc": 0.8,
           "soc_delta": -0.5
         }
@@ -1323,7 +1325,7 @@
         "event_type": "arrival",
         "update": {
           "connected_charging_station": "CS_Tesla Model 3_3",
-          "estimated_time_of_departure": "2024-06-23T08:00:00+02:00",
+          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
           "desired_soc": 0.8,
           "soc_delta": -0.5
         }
@@ -1344,7 +1346,7 @@
         "event_type": "arrival",
         "update": {
           "connected_charging_station": "CS_Tesla Model 3_4",
-          "estimated_time_of_departure": "2024-06-23T08:00:00+02:00",
+          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
           "desired_soc": 0.8,
           "soc_delta": -0.5
         }
@@ -1365,7 +1367,7 @@
         "event_type": "arrival",
         "update": {
           "connected_charging_station": "CS_Tesla Model 3_5",
-          "estimated_time_of_departure": "2024-06-23T08:00:00+02:00",
+          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
           "desired_soc": 0.8,
           "soc_delta": -0.5
         }
@@ -1386,7 +1388,7 @@
         "event_type": "arrival",
         "update": {
           "connected_charging_station": "CS_Tesla Model 3_6",
-          "estimated_time_of_departure": "2024-06-23T08:00:00+02:00",
+          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
           "desired_soc": 0.8,
           "soc_delta": -0.5
         }
@@ -1407,7 +1409,7 @@
         "event_type": "arrival",
         "update": {
           "connected_charging_station": "CS_Tesla Model 3_7",
-          "estimated_time_of_departure": "2024-06-23T08:00:00+02:00",
+          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
           "desired_soc": 0.8,
           "soc_delta": -0.5
         }
@@ -1428,7 +1430,7 @@
         "event_type": "arrival",
         "update": {
           "connected_charging_station": "CS_Tesla Model 3_8",
-          "estimated_time_of_departure": "2024-06-23T08:00:00+02:00",
+          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
           "desired_soc": 0.8,
           "soc_delta": -0.5
         }
@@ -1445,216 +1447,6 @@
       {
         "signal_time": "2024-06-22T19:00:00+02:00",
         "start_time": "2024-06-22T19:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_9",
-        "event_type": "arrival",
-        "update": {
-          "connected_charging_station": "CS_Tesla Model 3_9",
-          "estimated_time_of_departure": "2024-06-23T08:00:00+02:00",
-          "desired_soc": 0.8,
-          "soc_delta": -0.5
-        }
-      },
-      {
-        "signal_time": "2024-06-23T08:00:00+02:00",
-        "start_time": "2024-06-23T08:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_0",
-        "event_type": "departure",
-        "update": {
-          "estimated_time_of_arrival": "2024-06-23T19:00:00+02:00"
-        }
-      },
-      {
-        "signal_time": "2024-06-23T19:00:00+02:00",
-        "start_time": "2024-06-23T19:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_0",
-        "event_type": "arrival",
-        "update": {
-          "connected_charging_station": "CS_Tesla Model 3_0",
-          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
-          "desired_soc": 0.8,
-          "soc_delta": -0.5
-        }
-      },
-      {
-        "signal_time": "2024-06-23T08:00:00+02:00",
-        "start_time": "2024-06-23T08:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_1",
-        "event_type": "departure",
-        "update": {
-          "estimated_time_of_arrival": "2024-06-23T19:00:00+02:00"
-        }
-      },
-      {
-        "signal_time": "2024-06-23T19:00:00+02:00",
-        "start_time": "2024-06-23T19:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_1",
-        "event_type": "arrival",
-        "update": {
-          "connected_charging_station": "CS_Tesla Model 3_1",
-          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
-          "desired_soc": 0.8,
-          "soc_delta": -0.5
-        }
-      },
-      {
-        "signal_time": "2024-06-23T08:00:00+02:00",
-        "start_time": "2024-06-23T08:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_2",
-        "event_type": "departure",
-        "update": {
-          "estimated_time_of_arrival": "2024-06-23T19:00:00+02:00"
-        }
-      },
-      {
-        "signal_time": "2024-06-23T19:00:00+02:00",
-        "start_time": "2024-06-23T19:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_2",
-        "event_type": "arrival",
-        "update": {
-          "connected_charging_station": "CS_Tesla Model 3_2",
-          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
-          "desired_soc": 0.8,
-          "soc_delta": -0.5
-        }
-      },
-      {
-        "signal_time": "2024-06-23T08:00:00+02:00",
-        "start_time": "2024-06-23T08:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_3",
-        "event_type": "departure",
-        "update": {
-          "estimated_time_of_arrival": "2024-06-23T19:00:00+02:00"
-        }
-      },
-      {
-        "signal_time": "2024-06-23T19:00:00+02:00",
-        "start_time": "2024-06-23T19:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_3",
-        "event_type": "arrival",
-        "update": {
-          "connected_charging_station": "CS_Tesla Model 3_3",
-          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
-          "desired_soc": 0.8,
-          "soc_delta": -0.5
-        }
-      },
-      {
-        "signal_time": "2024-06-23T08:00:00+02:00",
-        "start_time": "2024-06-23T08:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_4",
-        "event_type": "departure",
-        "update": {
-          "estimated_time_of_arrival": "2024-06-23T19:00:00+02:00"
-        }
-      },
-      {
-        "signal_time": "2024-06-23T19:00:00+02:00",
-        "start_time": "2024-06-23T19:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_4",
-        "event_type": "arrival",
-        "update": {
-          "connected_charging_station": "CS_Tesla Model 3_4",
-          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
-          "desired_soc": 0.8,
-          "soc_delta": -0.5
-        }
-      },
-      {
-        "signal_time": "2024-06-23T08:00:00+02:00",
-        "start_time": "2024-06-23T08:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_5",
-        "event_type": "departure",
-        "update": {
-          "estimated_time_of_arrival": "2024-06-23T19:00:00+02:00"
-        }
-      },
-      {
-        "signal_time": "2024-06-23T19:00:00+02:00",
-        "start_time": "2024-06-23T19:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_5",
-        "event_type": "arrival",
-        "update": {
-          "connected_charging_station": "CS_Tesla Model 3_5",
-          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
-          "desired_soc": 0.8,
-          "soc_delta": -0.5
-        }
-      },
-      {
-        "signal_time": "2024-06-23T08:00:00+02:00",
-        "start_time": "2024-06-23T08:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_6",
-        "event_type": "departure",
-        "update": {
-          "estimated_time_of_arrival": "2024-06-23T19:00:00+02:00"
-        }
-      },
-      {
-        "signal_time": "2024-06-23T19:00:00+02:00",
-        "start_time": "2024-06-23T19:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_6",
-        "event_type": "arrival",
-        "update": {
-          "connected_charging_station": "CS_Tesla Model 3_6",
-          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
-          "desired_soc": 0.8,
-          "soc_delta": -0.5
-        }
-      },
-      {
-        "signal_time": "2024-06-23T08:00:00+02:00",
-        "start_time": "2024-06-23T08:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_7",
-        "event_type": "departure",
-        "update": {
-          "estimated_time_of_arrival": "2024-06-23T19:00:00+02:00"
-        }
-      },
-      {
-        "signal_time": "2024-06-23T19:00:00+02:00",
-        "start_time": "2024-06-23T19:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_7",
-        "event_type": "arrival",
-        "update": {
-          "connected_charging_station": "CS_Tesla Model 3_7",
-          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
-          "desired_soc": 0.8,
-          "soc_delta": -0.5
-        }
-      },
-      {
-        "signal_time": "2024-06-23T08:00:00+02:00",
-        "start_time": "2024-06-23T08:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_8",
-        "event_type": "departure",
-        "update": {
-          "estimated_time_of_arrival": "2024-06-23T19:00:00+02:00"
-        }
-      },
-      {
-        "signal_time": "2024-06-23T19:00:00+02:00",
-        "start_time": "2024-06-23T19:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_8",
-        "event_type": "arrival",
-        "update": {
-          "connected_charging_station": "CS_Tesla Model 3_8",
-          "estimated_time_of_departure": "2024-06-26T08:00:00+02:00",
-          "desired_soc": 0.8,
-          "soc_delta": -0.5
-        }
-      },
-      {
-        "signal_time": "2024-06-23T08:00:00+02:00",
-        "start_time": "2024-06-23T08:00:00+02:00",
-        "vehicle_id": "Tesla Model 3_9",
-        "event_type": "departure",
-        "update": {
-          "estimated_time_of_arrival": "2024-06-23T19:00:00+02:00"
-        }
-      },
-      {
-        "signal_time": "2024-06-23T19:00:00+02:00",
-        "start_time": "2024-06-23T19:00:00+02:00",
         "vehicle_id": "Tesla Model 3_9",
         "event_type": "arrival",
         "update": {

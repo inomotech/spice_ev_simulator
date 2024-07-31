@@ -131,7 +131,7 @@ def convert_to_vehicle_objects(df: pd.DataFrame) -> List[Vehicle]:
             "duration_in_hours": duration_in_hours
         }
         
-        no_drive_days = row.get("days_of_week", default_values["no_drive_days"])
+        no_drive_days = row.get("no_drive_days", default_values["no_drive_days"])
         
         vehicle = Vehicle(
             name=name,

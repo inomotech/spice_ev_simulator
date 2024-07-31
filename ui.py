@@ -43,6 +43,19 @@ def generate_vehicle_types_file(path: str, vehicles_df: pd.DataFrame) -> str:
 
     return vehicles_file_path
 
+def generate_pv_and_load_csv(path: str, pv_power_max: int, load_power: int = 0, num_days: int = 1) -> str:
+    data = pd.read_csv("./input/pv_and_load.csv")
+    # data["load"]
+    pv_file_path = os.path.join(os.path.dirname(path), "pv_and_load.csv")
+    st.write("will write to", pv_file_path)
+
+    max_power_in_file = data["pv"].max()
+    factor = pv_power_max / max_power_in_file
+    data["pv"] = data["pv"] * factor
+    
+    data[["timestamp", "pv"]].to_csv(pv_file_path, index=False)
+    return "pv_and_load.csv"
+
 def generate_config(run_id: str, scenario_id: str, vehicles_df: pd.DataFrame, prices_data: pd.DataFrame | None, grid_power_kW: int) -> str:
     """
     Generate a configuration file for a scenario
@@ -67,8 +80,14 @@ def generate_config(run_id: str, scenario_id: str, vehicles_df: pd.DataFrame, pr
     args.vehicle_types = vehicles_file_path
     args.vehicles = [[v["count"], v["name"]] for _, v in vehicles_df.iterrows()]
 
+    # write pv and load data to file
+    pv_file_path = generate_pv_and_load_csv(output_json_path, pv_power_max=20, load_power=0, num_days=num_days)
+    st.write(pv_file_path)
+    # args.include_local_generation_csv = pv_file_path
+    # args.include_local_generation_csv_option = [['column', "pv"], ['step_duration_s', 3600]]
+
     # set the battery capacity
-    args.battery = [[battery_capacity, 0.5]] if battery_capacity > 0 else []
+    args.battery = [[battery_capacity, 1]] if battery_capacity > 0 else []
     args.buffer = 0.1
 
     args.gc_power = grid_power_kW
@@ -114,7 +133,14 @@ class ScenarioResult:
         self.timeseries = timeseries
         self.soc = soc
 
-        self.timeseries["cost"] = self.timeseries.apply(lambda row: -1 * row["grid supply [kW]"] * row["price [EUR/kWh]"], axis=1)
+        # minutes betwen each timestep
+        if len(self.timeseries) < 2:
+            raise ValueError("Timeseries must have at least 2 rows")
+        
+        self.timeseries["time"] = pd.to_datetime(self.timeseries["time"])
+        time_between_timesteps = self.timeseries["time"].diff().iloc[1].seconds / 60
+
+        self.timeseries["cost"] = self.timeseries.apply(lambda row: -1 * row["grid supply [kW]"] * row["price [EUR/kWh]"] * time_between_timesteps / 60, axis=1)
         self.timeseries["total_cost"] = self.timeseries["cost"].cumsum()
 
     def get_metrics(self):
@@ -127,7 +153,7 @@ class ScenarioResult:
 
         # Commodity costs total for the period
         commodity_costs = data['costs']['electricity costs']['for simulation period']['grid fee']['commodity costs']['total costs']
-        metrics.append(Metric(name='Commodity Costs Total', value=commodity_costs, unit='EUR', detail='Total commodity costs for the simulation period'))
+        metrics.append(Metric(name='Commodity Costs (using fixed value)', value=commodity_costs, unit='EUR', detail='Total commodity costs for the simulation period'))
 
         # Stationary battery cycles
         if 'stationary battery cycles' in data:
@@ -229,7 +255,7 @@ with c[0]:
         # "schedule"
         ]
 
-    strategies_selected: list[str] = st.multiselect("Select a strategy", strategies_list, ["greedy", "balanced"])
+    strategies_selected: list[str] = st.multiselect("Select a strategy", strategies_list, ["greedy"])
 
 with c[1]:
     battery_capacity = st.number_input("Battery Capacity (kWh)", value=100)

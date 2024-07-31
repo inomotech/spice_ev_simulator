@@ -9,8 +9,8 @@
                     "info": "basic charge for SLP (standard load profile) customers."
                 },
                 "commodity_charge_ct/kWh": {
-                    "net_price": 7.48,
-                    "gross_price": 8.9,
+                    "net_price": 70.48,
+                    "gross_price": 80.9,
                     "unit": "ct/kWh",
                     "info": "commodity costs for SLP (standard load profile) customers"
                 }
@@ -27,11 +27,11 @@
                         "info": "capacity charge depending on the voltage level for RLM (Registrierende Leistungsmessung, engl.: consumption metering) customers with annual utilization time < 2500 h/a"
                     },
                     "commodity_charge_ct/kWh": {
-                        "HV": 2.3,
-                        "HV/MV": 3.81,
-                        "MV": 3.49,
-                        "MV/LV": 4.39,
-                        "LV": 4.83,
+                        "HV": 20.3,
+                        "HV/MV": 30.81,
+                        "MV": 30.49,
+                        "MV/LV": 40.39,
+                        "LV": 40.83,
                         "unit": "ct/kWh",
                         "info": "commodity charge depending on the voltage level for RLM (Registrierende Leistungsmessung, engl.: consumption metering) customers with annual utilization time < 2500 h/a"
                     }

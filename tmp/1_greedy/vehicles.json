@@ -41,6 +41,8 @@
                 "max_driving": 20
             }
         },
-        "no_drive_days": []
+        "no_drive_days": [
+            6
+        ]
     }
 }
